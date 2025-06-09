@@ -1,1 +1,65 @@
+// submit-lead.js (Netlify or Vercel Serverless Function)
+
+const axios = require("axios");
+
+exports.handler = async function (event, context) {
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      body: "Method Not Allowed",
+    };
+  }
+
+  try {
+    const data = JSON.parse(event.body);
+
+    // Replace with your Airtable details
+    const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
+    const BASE_ID = "your_base_id";
+    const TABLE_NAME = "Leads";
+
+    // Format data into Airtable fields
+    const fields = {
+      "First Name": data["First Name"],
+      "Last Name": data["Last Name"],
+      "Email": data["Email"],
+      "Phone Number": data["Phone Number"],
+      "Province": data["Province"],
+      "Postal Code": data["Postal Code"],
+      "Credit Rating": data["Credit Rating"],
+      "Employment Status": data["Employment Status"],
+      "Monthly Income": data["Monthly Income"],
+      "Years at Employment": data["Years at Employment"],
+      "Vehicle Intent": data["Vehicle Intent"],
+      "Car Budget": data["Car Budget"],
+      "Loan Term": data["Loan Term"],
+      "Down Payment Available": data["Down Payment Available"],
+      "Down Payment Amount": data["Down Payment Amount"],
+      "Consent Given": data["Consent Given"],
+      "Country": data["Country"] || "Canada"
+    };
+
+    await axios.post(
+      `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`,
+      { fields },
+      {
+        headers: {
+          Authorization: `Bearer ${AIRTABLE_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ success: true }),
+    };
+  } catch (error) {
+    console.error("Submission Error:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Submission failed" }),
+    };
+  }
+};
 
