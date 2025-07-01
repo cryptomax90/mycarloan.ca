@@ -153,7 +153,7 @@
     <input type="hidden" name="_next" value="thankyou.html">
     <button class="submit-btn" type="submit">Get My Free Quote</button>
   </form>
-  
+
   <script>
   const form = document.querySelector("form");
   form.addEventListener("submit", async function (e) {
@@ -165,6 +165,11 @@
     formData.forEach((value, key) => {
       data[key] = value;
     });
+
+     if (data["Monthly Income"]) {
+  data["Monthly Income"] = data["Monthly Income"].replace(/[^0-9.]/g, "");
+}
+
 
     try {
       const response = await fetch(form.action, {
