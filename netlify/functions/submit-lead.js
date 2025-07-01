@@ -48,21 +48,50 @@ exports.handler = async function (event, context) {
 
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
-    await axios.post(
-      "https://api.resend.com/emails",
-      {
-        from: "MyCarLoan Test <cryptomax90@proton.me>",
-        to: data["Email"],
-        subject: "We Received Your Application",
-        html: `<p>Hi ${data["First Name"] || "there"},</p><p>Thanks for applying with MyCarLoan.ca! A licensed advisor will contact you shortly.</p>`,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${RESEND_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    // Send confirmation email to applicant
+await axios.post(
+  "https://api.resend.com/emails",
+  {
+    from: "MyCarLoan Test <noreply@resend.dev>",
+    to: "cryptomax90@proton.me",  // during sandbox testing; later change to data["Email"]
+    subject: "We Received Your Application",
+    html: `<p>Hi ${data["First Name"] || "there"},</p><p>Thanks for applying with MyCarLoan.ca! A licensed advisor will contact you soon.</p>`
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+  }
+);
+
+// Send notification email to yourself
+await axios.post(
+  "https://api.resend.com/emails",
+  {
+    from: "MyCarLoan Notification <noreply@resend.dev>",
+    to: "cryptomax90@proton.me",  // always notify yourself
+    subject: "New Car Loan Lead Submitted",
+    html: `
+      <p>A new lead has been submitted:</p>
+      <ul>
+        <li><strong>Name:</strong> ${data["First Name"]} ${data["Last Name"]}</li>
+        <li><strong>Email:</strong> ${data["Email"]}</li>
+        <li><strong>Phone:</strong> ${data["Phone Number"]}</li>
+        <li><strong>Province:</strong> ${data["Province"]}</li>
+        <li><strong>Credit Rating:</strong> ${data["Credit Rating"]}</li>
+        <!-- add any other key details you want -->
+      </ul>
+    `
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+  }
+);
+
 
     return {
       statusCode: 200,
