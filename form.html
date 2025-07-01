@@ -153,5 +153,39 @@
     <input type="hidden" name="_next" value="thankyou.html">
     <button class="submit-btn" type="submit">Get My Free Quote</button>
   </form>
+  
+  <script>
+  const form = document.querySelector("form");
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = {};
+
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        window.location.href = 'thankyou.html';
+      } else {
+        alert('Submission failed. Please try again.');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred. Please try again later.');
+    }
+  });
+</script>
+
 </body>
 </html>
