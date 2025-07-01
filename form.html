@@ -166,6 +166,13 @@
       data[key] = value;
     });
 
+if (data["Consent Given"]) {
+  data["Consent Given"] = true;
+} else {
+  data["Consent Given"] = false;
+}
+
+
  if (data["Monthly Income"]) {
   const sanitizedIncome = data["Monthly Income"].replace(/[^0-9.]/g, "");
   data["Monthly Income"] = sanitizedIncome !== "" ? parseFloat(sanitizedIncome) : null;
