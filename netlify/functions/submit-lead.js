@@ -51,7 +51,7 @@ exports.handler = async function (event, context) {
     await axios.post(
       "https://api.resend.com/emails",
       {
-        from: from: "MyCarLoan Test <noreply@onresend.com>",
+        from: "MyCarLoan Test <noreply@onresend.com>",
         to: data["Email"],
         subject: "We Received Your Application",
         html: `<p>Hi ${data["First Name"] || "there"},</p><p>Thanks for applying with MyCarLoan.ca! A licensed advisor will contact you shortly.</p>`,
