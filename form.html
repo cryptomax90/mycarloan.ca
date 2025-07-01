@@ -171,6 +171,12 @@
   data["Monthly Income"] = sanitizedIncome !== "" ? parseFloat(sanitizedIncome) : null;
 }
 
+if (data["Down Payment Amount"]) {
+  const sanitizedPayment = data["Down Payment Amount"].replace(/[^0-9.]/g, "");
+  data["Down Payment Amount"] = sanitizedPayment !== "" ? parseFloat(sanitizedPayment) : null;
+}
+
+
 
 
     try {
