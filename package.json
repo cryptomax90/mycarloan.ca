@@ -1,0 +1,23 @@
+{
+  "name": "mycarloan.ca",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cryptomax90/mycarloan.ca.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cryptomax90/mycarloan.ca/issues"
+  },
+  "homepage": "https://github.com/cryptomax90/mycarloan.ca#readme",
+  "dependencies": {
+    "axios": "^1.10.0"
+  }
+}
