@@ -218,12 +218,15 @@ if (data["Down Payment Amount"]) {
   });
 </script>
 
-<script>
+<<script>
   var cleave = new Cleave('#phone', {
-    phone: true,
-    phoneRegionCode: 'CA'
+    prefix: '+1',
+    blocks: [2, 0, 3, 3, 4],
+    delimiters: [' ', '(', ') ', '-', ''],
+    numericOnly: true
   });
 </script>
+
 
 </body>
 </html>
