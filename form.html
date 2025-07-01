@@ -166,9 +166,11 @@
       data[key] = value;
     });
 
-     if (data["Monthly Income"]) {
-  data["Monthly Income"] = data["Monthly Income"].replace(/[^0-9.]/g, "");
+ if (data["Monthly Income"]) {
+  const sanitizedIncome = data["Monthly Income"].replace(/[^0-9.]/g, "");
+  data["Monthly Income"] = sanitizedIncome !== "" ? parseFloat(sanitizedIncome) : null;
 }
+
 
 
     try {
